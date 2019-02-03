@@ -29,7 +29,7 @@ class Game {
   handleInteraction(key) {
     const keyboard = document.querySelectorAll('.keyrow button.key');
     const letter = key.textContent;
-    const phrase = new Phrase(this.activePhrase);
+    const phrase = this.activePhrase;
 
     // Disable the selected letter’s onscreen keyboard button.
     keyboard.forEach(button => {
@@ -39,10 +39,10 @@ class Game {
       // check if letter guess is correct
       if (!phrase.checkLetter(letter)) {
         button.setAttribute('class', 'wrong');
-        removeLife();
+        this.removeLife();
       } else {
         button.setAttribute('class', 'chosen');
-        phrase.showMatchedLetter();
+        phrase.showMatchedLetter(letter);
         if (this.checkForWin) {
           this.gameOver();
         }
@@ -56,9 +56,8 @@ class Game {
       //remove a live
       const live = document.querySelector('.tries');
       live.parentNode.removeChild(live);
-      console.log('in the remove live branch');
     } else {
-      gameOver();
+      this.gameOver();
     }
   }
 

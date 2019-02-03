@@ -27,5 +27,8 @@ class Phrase {
     }
   }
 
-  showMatchedLetter() {}
+  showMatchedLetter(letter) {
+    const letters = document.querySelector('#phrase li');
+    console.log(letter);
+  }
 }
