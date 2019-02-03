@@ -32,30 +32,33 @@ class Game {
     const phrase = this.activePhrase;
 
     // Disable the selected letter’s onscreen keyboard button.
-    keyboard.forEach(button => {
-      if (button.nodeValue === letter) {
-        button.setAttribute('disable', true);
+    key.disabled = true;
+
+    // check if the phrase includes the guessed letter
+    if (this.activePhrase.checkLetter(key.textContent)) {
+      key.setAttribute('class', 'chosen');
+      this.activePhrase.showMatchedLetter(key.textContent);
+      // check if player won the game
+      if (this.checkForWin()) {
+        this.gameOver();
       }
-      // check if letter guess is correct
-      if (!phrase.checkLetter(letter)) {
-        button.setAttribute('class', 'wrong');
-        this.removeLife();
-      } else {
-        button.setAttribute('class', 'chosen');
-        phrase.showMatchedLetter(letter);
-        if (this.checkForWin) {
-          this.gameOver();
-        }
-      }
-    });
+    } else {
+      key.setAttribute('class', 'wrong');
+      this.removeLife();
+    }
   }
 
   removeLife() {
     this.missed += 1;
+    const lives = document.querySelectorAll('.tries');
+
     if (this.missed !== 5) {
-      //remove a live
-      const live = document.querySelector('.tries');
-      live.parentNode.removeChild(live);
+      //remove a live by replacing the image
+      for (let i = 0; i < this.missed; i += 1) {
+        let live = lives[i];
+        let img = live.firstChild;
+        img.setAttribute('src', 'images/lostHeart.png');
+      }
     } else {
       this.gameOver();
     }

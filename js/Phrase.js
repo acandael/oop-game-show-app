@@ -28,7 +28,11 @@ class Phrase {
   }
 
   showMatchedLetter(letter) {
-    const letters = document.querySelector('#phrase li');
-    console.log(letter);
+    const letters = document.querySelectorAll('#phrase li');
+    letters.forEach(key => {
+      if (key.textContent === letter) {
+        key.setAttribute('class', 'show');
+      }
+    });
   }
 }
