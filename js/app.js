@@ -29,5 +29,7 @@ startButton.addEventListener('click', function() {
 // register clicks keyboard buttons
 const keyBoard = document.getElementById('qwerty');
 keyBoard.addEventListener('click', function(e) {
-  game.handleInteraction(e.target);
+  if (e.target.tagName === 'BUTTON') {
+    game.handleInteraction(e.target);
+  }
 });
